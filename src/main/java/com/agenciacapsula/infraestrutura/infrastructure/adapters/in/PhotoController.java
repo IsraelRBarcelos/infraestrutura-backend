@@ -56,4 +56,10 @@ public class PhotoController {
         List<Photo> allPhotos = retrievePhotosUseCase.getPhotosByStreetName(streetName);
         return ResponseEntity.ok(allPhotos);
     }
+
+    @GetMapping("/all-photos")
+    public ResponseEntity<List<Photo>> getAll() {
+        List<Photo> allPhotos = retrievePhotosUseCase.getAll();
+        return ResponseEntity.ok(allPhotos);
+    }
 }

@@ -57,4 +57,9 @@ public class PhotoService implements UploadPhotoUseCase, RetrievePhotosUseCase {
     public List<Photo> getPhotosByStreetName(String streetName) {
         return repositoryPort.findByStreetName(streetName);
     }
+
+    @Override
+    public List<Photo> getAll() {
+        return repositoryPort.findAll();
+    }
 }
