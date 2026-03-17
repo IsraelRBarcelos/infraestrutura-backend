@@ -1,0 +1,31 @@
+package com.agenciacapsula.infraestrutura.infrastructure.config;
+
+import io.netty.channel.ChannelOption;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.client.reactive.ReactorClientHttpConnector;
+import org.springframework.web.reactive.function.client.WebClient;
+import reactor.netty.http.client.HttpClient;
+
+import java.time.Duration;
+
+@Configuration
+public class WebClientConfig {
+
+    @Bean
+    public WebClient webClient() {
+        WebClient.Builder builder = WebClient.builder();
+
+        HttpClient httpClient = HttpClient.create()
+                .option(ChannelOption.CONNECT_TIMEOUT_MILLIS, 5000)
+                .responseTimeout(Duration.ofSeconds(10));
+
+        return builder
+                .baseUrl("https://nominatim.openstreetmap.org")
+                .defaultHeader(HttpHeaders.USER_AGENT, "MeuAppGeolocalizacao/1.0")
+                .defaultHeader(HttpHeaders.ACCEPT, "application/json")
+                .clientConnector(new ReactorClientHttpConnector(httpClient))
+                .build();
+    }
+}
